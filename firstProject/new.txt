@@ -1,0 +1,24 @@
+查询xfj表中WTSDDM字段的值没有
+
+
+3700002018111301635
+
+
+
+根据parent_code查询js_sys_office查不到数据
+2018012493958
+
+
+
+
+郑士兰
+
+
+select XFRDZ,GKXX FROM XFJ where XFJBM = '201222467451'
+
+
+update SZ_LESS_10 set XFRDZ = '',GKXX = '' where XFJBM = '201222467451'
+
+more_ten_xfj_lcxx
+
+
