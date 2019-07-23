@@ -68,3 +68,24 @@
 # L = ['Bart', 'Lisa', 'Adam']
 # for name in L:
 #     print("hello  "+name)
+
+# ********************dict和set*****************************
+
+# map = {"A":"1","B":"2","C":"3"};
+# print(map)
+# map.pop("A")
+# print(map)
+# flag = "C" in map
+# print(map.get("D"))
+
+demoSet1 = set([1,2,4,5,6,7,1])
+demoSet2 = set([2,4,6])
+# demoSet1.add(2)
+# demoSet1.remove(1)
+# result = demoSet1 & demoSet2
+# result = demoSet1 | demoSet2
+# print(result)
+
+test = "abcd"
+test1 = test.replace("a","A")
+print(test1)
