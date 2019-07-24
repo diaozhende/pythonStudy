@@ -1,5 +1,5 @@
-### python笔记
-##### 1.list
+# python笔记
+## 1.list
 list是一个可变的有序表，类似于java的list,list中的数据类型可以不相同,list元素可以是可以是另一个list
 方法:
 1)向一个集合末尾添加数据
@@ -20,7 +20,7 @@ list.pop(索引);
 ```
 4)修改list数据
 ```python
-//直接给指定的数据赋值
+#  直接给指定的数据赋值
 list[索引] = "数据内容";
 ```
 5)获取list的元素个数
@@ -28,20 +28,18 @@ list[索引] = "数据内容";
 len(list)
 ```
 
-##### 2.tuple
+## 2.tuple
 tuple是一个不可变的元组,tuple一旦被初始化就不能被修改
 ```python 
-//tuple初始化
-text=("1","2","3")
-//当tuple只有一个元素的时候初始化的时候元素后面必须加一个,
+#  tuple初始化
+text=("1","2","3")#  /当tuple只有一个元素的时候初始化的时候元素后面必须加一个,
 text=(1,)
 
-
-//查看元素的值
+#  /查看元素的值
 text[索引]
 ```
 
-##### 3.条件判断
+## 3.条件判断
 if条件判断格式
 ```python
 if <条件判断1>:
@@ -49,7 +47,7 @@ if <条件判断1>:
 else:
 	<执行else>
     
-//多条件的格式
+#  多条件的格式
 if <条件判断 1>:
  	<执行 1>
 elif <条件判断 2>:
@@ -62,7 +60,7 @@ else:
 ```
 
 
-##### 4.循环
+## 4.循环
 python中的循环有两种,一种是for in迭代循环,另一种是while循环
 1)for in 循环
 格式:
@@ -72,7 +70,7 @@ for obj in list
 list = ['1','2','3']
 for value in list
 	print(value)
-//依次输出list的值
+#  依次输出list的值
 ```
 2)while循环
 格式
@@ -89,7 +87,7 @@ rang函数,可以生成一个整数序列,再通过 list()函数可以转换为 
  print(list)
 ```
 
-##### 5.dict- - -字典
+## 5.dict- - -字典
 dict相当于一个map,是key-value的形式,类似于java中的map集合,是无序的
 1)dict初始化
 ```python
@@ -105,17 +103,17 @@ text.pop(key)
 ```
 4)获取元素
 ```python
-\\通过in判断key是否在这个dictzhong,如果存在返回True,如果不存在返回False
+# 通过in判断key是否在这个dictzhong,如果存在返回True,如果不存在返回False
 "key" in text
-\\通过get方法获取dict的值,如果不存在返回None
+# 通过get方法获取dict的值,如果不存在返回None
 text.get("newText")
 
-\\get方法获取值当不存在的时候还可以返回指定的值
+# get方法获取值当不存在的时候还可以返回指定的值
 text.get("newText",-1)
 ```
 
 
-##### 6.set
+## 6.set
 set和dict 类似，也是一组key的集合，但不存储value由于key不能重复，所以，在set中,没有重复的key,是无序的
 1)创建一个set
 ```python
@@ -123,7 +121,7 @@ demoSet = ([1,2,3,4])
 ```
 2)向set添加数据
 ```python
-//如果向set中添加重复数据的话，程序不会报错，重复数据会被忽略
+#  如果向set中添加重复数据的话，程序不会报错，重复数据会被忽略
 demoSet.add("newText")
 ```
 3)set通过remove删除数据
@@ -139,17 +137,17 @@ demoSet1.remove(1)
 result = demoSet1 & demoSet2
 result = demoSet1 | demoSet2
 ```
-##### 7.replace函数
+## 7.replace函数
 replace函数是将字符串中的字符进行替换
 ```python
 test = "abcd"
 test1 = test.replace("a","A")
 ```
 
-##### 8.函数模块
+## 8.函数模块
 1)定义函数
 ```python
-//函数的基本格式
+#  函数的基本格式
 def 函数名(参数):
 	函数的逻辑
     return result
@@ -161,10 +159,10 @@ def 函数名(参数):
 ```
 3)定义一个空函数
 ```python
-//pass表示展位
+#  pass表示展位
 def nulFunction():
 	pass
-//在if判断中也可以加入pass
+#  在if判断中也可以加入pass
 def function(x):
 	if x>0:
     	print(x)
@@ -175,10 +173,10 @@ def function(x):
 ```python
 def moreResult(x,y,z):
 	return x,y,z
-//调用函数,函数返回多值实际上就是返回了一个tuple
+#  调用函数,函数返回多值实际上就是返回了一个tuple
 x,y,z = moreResult(1,2,3)
 ```
-##### 9.isinstance函数,类型检查函数
+## 9.isinstance函数,类型检查函数
 ```python
 def typeCheck(param):
     if not isinstance(param,(int,float)):
@@ -189,8 +187,9 @@ def typeCheck(param):
         print("参数小于零")
 ```
 
-##### 10.函数的参数
+## 10.函数的参数
 1)默认参数
+
 ```python
 必选参数在前,默认参数在后,否则程序会报错
 def staticParam(x,y,n="123"):
@@ -203,19 +202,19 @@ staticParam(1,2,3)
 2)可变参数
 将list和tuple作为函数的参数
 ```python
-//参数为list
+#  参数为list
 def changeParam(param):
 	for n in param:
     	print(n);
 changeParam([1,2,3,4])
 
-//参数为tuple
+#  参数为tuple
 def changeParam(param):
 	for n in param:
     	print(n);
 changeParam((1,2,3,4))
 
-//参数简写
+#  参数简写
 def changeParam(*param):
 	for n in param:
     	print(n);
@@ -232,3 +231,393 @@ def person(name,age,**kw):
 person("张三","28",address="北京",phone="1234567890")//关键字的参数也可以不传
 person("张三","28")
 ```
+
+4)命名关键字参数
+
+通过 `in` 函数判断是否有这个参数
+
+``` python
+def personCheck(name, age, **kw):
+    if 'address' in kw:
+        print("address", kw.get("address"))
+personCheck("李四","28",qw="shandong")
+```
+
+命名关键字参数来限制关键字参数名称，用*分隔
+
+```python
+def function(name,age,*,address,phone):#*号后面的参数视为命名关键字参数
+    print("name",name)
+    print("age",age)
+    print("address",address)
+    print("phone",phone)
+function("李四","24",address="jinan",phone="123321")#如果传入参数与方法不匹配，程序会报错
+
+#如果命名关键字参数有默认值得话，调用函数的时候也可以不传递命名关键字参数
+```
+
+4)参数组合
+
+在python中定义函数，可以用必选参数，默认参数，可变参数，关键字参数和命名关键字参数，其中可变参数和命名关键字参数无法混合，参数的定义顺序是：必选参数，默认参数，可变参数，关键字参数/命名关键字参数。
+
+ ### **注意  ：** *args是可变参数**，**args接收的是一个tuple，**kw是关键字参数，接收的是一个dict。
+
+## 11.递归函数
+
+在函数内部，可以调用其他函数。如果一个函数在内部调用自身本身，这个函数就是递归函数。
+
+
+
+## 12.切片
+
+切片就是去一个list和tuple的部分元素，也可以用作字符串的截取
+
+```python
+listText = list(range(100)) 
+result1 = listText[0:10]# 取前十个元素 :左边的是开始索引，右边的结束索引
+result1 = listText[-10:] #取后十个元素，如果从第一个开始取索引是0，那么0可以省略
+print(result1)
+tupleText = (1,2,3,4,5,6,7,8,9,10)
+result2 = tupleText[-5:]
+print(result2)
+text = "QWERTYUIOP" # 字符串的截取，把字符串看成一个数组，根据索引来对字符串进行截取
+result3 = text[-4:]
+print(result3)
+```
+
+##  13.迭代
+
+迭代就是对一个list和tuple进行遍历，在python中通过for ... in进行迭代
+
+```python
+listText = {"第一个key":"第一个value","第二个key":"第二个value","第三个key":"第三个value","第四个key":"第四个value","第五个key":"第五个value"};
+# python中默认是通过key进行迭代
+for key in listText:
+    print(key)
+
+# 迭代value
+for value in listText.values():
+    print(value)
+
+#迭代字符串
+text = "ABCDEFG"
+for val in text:
+    print(val)
+
+# 判断一个对象是否是可迭代对象
+from collections import Iterable
+flag = isinstance("123",Iterable)
+print(flag)
+
+# 迭代显示索引
+userList = ["zhangsan","lisi","wangwu","zhaoliu"]
+for i ,t in enumerate(userList):
+    print("索引:",i,"值：",t)
+
+ # for循环中同时引用两个变量
+userListText = [("zhangsan","jinan"),("lisi","weifang"),("wangwu","qingzhou"),("zhaoliu","qingzhou")]
+for x,y in userListText:
+    print(x,y)
+
+# 同时迭代dict的key和value
+dictList = {"A":"a","B":"b","C":"c"}
+for x,y in dictList.items():
+    print(x+":"+y)
+```
+
+
+
+## 14.列表生成式
+
+```python
+# 生成一个[1x1,2x2,....,10x10]
+listText1 = [x * x for x in range(1,11)]
+print(listText1)
+
+# for循环后面还可以加判断
+listText2 = [x*x for x in range(1,11) if x%2 == 0]
+print(listText2)
+
+# 两层for循环
+listText3 = [x+n for x in "ABC" for n in "XYZ"]
+print(listText3)
+# 列出当前目录下所有的文件名
+import os
+listText4 = [d for d in os.listdir('.')]
+print(listText4)
+
+# 通过isinstance函数判断一个变量是不是字符串类型
+text = '123'
+flag = isinstance(text1,str)
+print(flag)# 如果是返回True，如果不是返回False
+
+# L1 = ['Hello', 'World', 18, 'Apple', None]   期待输出: ['hello', 'world', 'apple']
+L1 = ['Hello', 'World', 18, 'Apple', None]
+result = [text for text in L1 if isinstance(text,str)]
+print(result)
+```
+
+
+
+## 15.生成器
+
+这个模块没看明白
+
+## 16.迭代器
+
+```python
+it=iter([1,2,3,4,5]);
+while True:
+    try:
+        # 获取下一值
+        x = next(it)
+        print(x)
+    except StopIteration:
+        # 遇到StopIteration异常退出循环
+        break
+```
+
+
+
+## 17.高阶函数
+
+### 1) 变量可以指向函数
+
+```python
+# 求绝对值函数
+x = abs(-100)
+print(x)
+# 将函数本身赋值给变量
+x1 = abs
+print(x1)
+# 通过赋值的变量也可以直接调用该变量，跟调用原方法没有区别
+x2 = x1(-99)
+print(x2)
+```
+
+### 2)函数名也是变量名
+
+```python
+abs = 10
+print(abs)
+```
+
+ 把 abs 指向 10 后，就无法通过 abs(-10)调用该函数了！因为 abs 这个变量已经不指向求绝对值函数而是指向一个整数 10！当然实际代码绝对不能这么写，这里是为了说明函数名也是变量。要恢复 abs 函数，请重启 Python 交互环境。
+
+**注：由于 abs 函数实际上是定义在__builtin__模块中的，所以要让修改 abs 变量的指向在其它模块也生效，要用      `__builtin__.abs = 10`**
+
+### 3)传入函数
+
+将函数当做函数的参数传入到另一个函数中
+
+```python
+f = abs
+def function(x,y,z):
+    print("X:",z(x))
+    print("Y:",z(y))
+
+function(-100,-200,f)
+```
+
+
+
+## 18.map和reduce
+
+### 1)map
+
+```python
+# 得到list中每个元素的平方值
+def function(x):
+    return x*x
+listText = [1,2,4,5,6,7,8,9]
+result1 = map(function,listText)
+print(list(result1))
+
+# 将int转换成str
+listText = [1,2,4,5,6,7,8,9]
+result2 = map(str,listText)
+print(list(result2))
+```
+
+
+
+### 2)reduce
+
+```python
+# 将str序列转换成int整数
+from functools import reduce
+def fn(x,y):
+    return x*10+y
+def paramNum(s):
+    return s
+s = {'0': 0, '1': 1, '2': 2, '3': 3, '4': 4, '5': 5, '6': 6,'7': 7, '8': 8, '9': 9}
+result5 = reduce(fn,map(paramNum,s))
+print(result5)
+# 输出结果:12456789
+
+# 利用lambda函数进行简化
+from functools import reduce
+def str2int():
+    return reduce(lambda x,y:x*10+y,map(paramNum,s))
+result6 = str2int()
+print(result6)
+```
+
+### 章节练习
+
+```python
+# 输入：['adam', 'LISA', 'barT']，输出：['Adam','Lisa', 'Bart']
+listTextChange1 = ['adam', 'LISA', 'barT']
+def change(x):
+    text = x.title()
+    return text
+result7 = map(change,listTextChange1)
+print(list(result7))
+
+
+# 请编写一个 prod()函数，可以接受一个 list 并利用 reduce()求积
+listNum = [1,2,3,4,5,6]
+def functionResult(x,y):
+    return x*y
+def listResult(list):
+    return list
+result8 = reduce(functionResult,map(listResult,listNum))
+print(result8)
+```
+
+
+
+## 19.sorted 排序函数
+
+```python
+# 从小到大排序
+listText=[45,-10,1,35,-89]
+result = sorted(listText)
+print(result)
+# 从大到小排序
+listText=[45,-10,1,35,-89]
+result = sorted(listText,reverse=True)
+print(result)
+# 按照绝对值大小排序
+resultAbs = sorted(listText,key = abs)
+print(resultAbs)
+# 字符串排序
+paramStr = ['bob', 'about', 'Zoo', 'Credit']
+resultStr = sorted(paramStr)
+print(resultStr)
+# 字符串排序忽略大小写
+resultStrLower = sorted(paramStr,key = str.lower)
+print(resultStrLower)
+# 反向排序
+resultStrLowerReverse = sorted(paramStr,key = str.lower,reverse=True)
+print(resultStrLowerReverse)
+```
+
+
+
+### 章节练习
+
+```python
+L = [('Bob', 75), ('Adam', 92), ('Bart', 66), ('Lisa', 88)]
+# 根据名字进行排序
+nameList = []
+def by_name(t):
+    for key,value in t:
+        nameList.append(key)
+nameResult = sorted(nameList,key=by_name(L))
+print(nameResult)
+
+# 根据分数进行排序
+scoreList = []
+def by_score(t):
+    for key,value in t:
+        scoreList.append(value)
+scoreResult = sorted(scoreList,key=by_score(L))
+print(scoreResult)
+```
+
+
+
+## 20.返回函数
+
+将函数当做返回值进行返回
+
+```python
+# 返回求和函数
+def calc_num(*args):
+    def sum():
+        ax = 0
+        for num in args:
+            ax = ax + num
+        return ax
+    return sum
+
+result = calc_num(1,2,3,4,5,6)
+print(result())
+```
+
+### 闭包
+
+在函数 lazy_sum 中又定义了函数 sum，并且，内部函数 sum 可以引用外部函数 lazy_sum 的参数和局部变量，当 lazy_sum 返回函数 sum 时，相关参数和变量都保存在返回的函数中，这种称为“闭包（Closure）”的程序结构拥有极大的威力。
+
+## 21.匿名函数
+
+拿计算f(x) = x²
+
+```python
+ list(map(lambda x: x * x, [1, 2, 3, 4, 5, 6, 7, 8, 9]))
+#输出结果:[1, 4, 9, 16, 25, 36, 49, 64, 81]
+
+#匿名函数相当于
+#def f(x):
+# return x * x
+# 关键字 lambda 表示匿名函数，冒号前面的 x 表示函数参数，匿名函数有个限制，就是只能有一个表达式，不用写 return，返回值就是该表达式的结果。
+```
+
+
+
+##  22.装饰器
+
+```python
+# 在函数调用前后打印日志
+def log(text):
+    def decorator(func):
+        @functools.wraps(func) # 把原始函数的__name__等属性复制到 wrapper()函数中
+        def wrapper(*args,**kw):
+            print("%s  %s()"%(text,func.__name__))
+            return func(*args,**kw)
+        return wrapper
+    return decorator
+```
+
+
+
+## 23.偏函数
+
+### 1) int转换函数
+
+```python
+# int转换函数
+text = '12345'
+result = int(text) # 默认是转换十进制 可以简写成result = int(text,8)
+result = int(text,base=8)# 转换八进制
+result = int(text,base=16)# 转换十六进制
+result = int("1010101",base=2)# 转换二进制
+```
+
+### 2)偏函数
+
+functools.partial 就是帮助我们创建一个偏函数的，不需要我们自己定义 int2()，可以直接使用下面的代码创建一个新的函数 int2
+
+```python
+import functools
+int2 = functools.partial(int, base=2)
+int2('1000000')
+# 输出结果:64 
+```
+
+
+
+所以，简单总结 functools.partial 的作用就是，把一个函数的某些参数给固定住（也就是设置默认值），返回一个新的函数，调用这个新函数会更简单。
+
+`总结：当函数的参数个数太多，需要简化时，使用 functools.partial 可以创建一个新的函数，这个新函数可以固定住原函数的部分参数，从而在调用时更简单。`
