@@ -621,3 +621,369 @@ int2('1000000')
 所以，简单总结 functools.partial 的作用就是，把一个函数的某些参数给固定住（也就是设置默认值），返回一个新的函数，调用这个新函数会更简单。
 
 `总结：当函数的参数个数太多，需要简化时，使用 functools.partial 可以创建一个新的函数，这个新函数可以固定住原函数的部分参数，从而在调用时更简单。`
+
+## 24.模块
+
+python中每一个.py文件就是一个模块
+
+### 1)包
+
+包的目录下有一个__init__.py文件，这个问价是必须存在的，如果不存在就是一个普通的目录
+
+### 2)使用模块
+
+python中有很多模块，要使用模块之前要进行安装
+
+##### 安装模块命令
+
+```shell
+pip install 模块名
+```
+
+##### 引入模块代码
+
+```python
+import 模块名
+```
+
+##### 实例代码
+
+```python
+_author_ = 'Michael Liao'
+import sys
+def test():
+    args = sys.argv
+    if len(args) == 1:
+        print("hello world")
+    elif len(args) == 2:
+        print("hello %s!"% args[1])
+    else :
+        print("Too many arguments!")
+test()
+```
+
+### 3)作用域
+
+一般的变量和方法都是公开的(public)，以下划线开头的变量(例：password)和方法(例：login())是私有的(private)，我们不应该直接调用这些私有的变量和方法，调用程序也是不会报错的。
+
+### 4)安装第三方模块
+
+在 Python 中，安装第三方模块，是通过包管理工具 pip 完成的。
+
+```shell
+# 安装Pillow
+pip3 install Pillow
+```
+
+
+
+## 25.面向对象编程
+
+```python
+class studnet(object): #object表示继承的类
+    def __init__(self,name,score):
+        self.name = name
+        self.score = score
+
+    def print_score(self):
+        print("%s:%s" %(self.name,self.score))
+
+zhangsan = studnet("zhangsan","100")
+zhangsan.print_score()
+```
+
+
+
+## 26.类和实例
+
+类（class），实例（Instance）
+
+```python
+# 创建类的格式及使用
+class Student(object)  #object表示继承的类
+	def __init__(self,name.score) # 类的属性，相当于java类中的构造函数，
+    	self.name = name #赋值
+        self.score = score
+    def print_score()： # 类中封装的方法
+    	print("%s:%s" %(self.name,self.score))
+#创建对象，调用类中封装的方法
+stu = Student("lisi","99") 
+stu.print_score();
+
+
+# self永远在第一个，创建对象的时候不用传递该参数，Python 解释器自己会把实例变量传进去 表示创建的实例本身，因此，在__init__方法内部，就可以把各种属性绑定到 self，因为 self就指向创建的实例本身
+```
+
+## 27.访问限制
+
+在python中，class类中的属性分为以下几种：
+
+### 1）__name（两个下划线开头）
+
+这个表示私有变量，在外部直接访问程序会报错，通过get和set方法来进行操作
+
+```python
+class Studnet(object):
+    def __init__(self,name,score):
+        self.__name = name;
+    def get_name(self):
+        return self.__name
+    def set_name__(self, name):
+        self.__name = name
+stu = Studnet("张三","100")
+stu.set_name__("李四")
+
+print("姓名:%s"%stu.get_name())
+```
+
+
+
+### 2）_name（一个下划线开头）
+
+这个是外部可以直接访问的，虽然不报错，但是我们把它看做是私有变量，不能随意访问。
+
+
+
+### 3） ` __name__`    两个下划线开头和结尾
+
+变量名类似 `__xxx__` 的，也就是以双下划线开头，并且以双下划线结尾的，是特殊变量，特殊变量是可以直接访问的，不是 private 变量，所以，不能用__name__、__score__这样的变量名
+
+## 28.继承和多态
+
+### 1）继承
+
+```python
+class Animal(object):
+     def out(self):
+         print("Animal run...")
+
+class Dog(Animal):
+    def __init__(self, name):
+        self.name = name
+class Cat(Animal):
+    def __init__(self,name):
+        self.name = name
+dog = Dog("Dog")
+dog.out();
+```
+
+
+
+### 3）多态
+
+```python
+class Animal(object):
+     def out(self):
+         print("Animal run...")
+
+class Dog(Animal):
+    def __init__(self, name):
+        self.name = name
+    def out(self):
+        print("Dog run...")
+
+class Cat(Animal):
+    def __init__(self,name):
+        self.name = name
+
+    def out(self):
+        print("Cat run...")
+animal = Animal()
+def run_twice(animal):
+    animal.out()
+run_twice(Dog("name"))
+# 输出结果:Dog run...
+run_twice(Cat("name"))
+# 输出结果：Cat run...
+```
+
+
+
+## 29.获取对象信息
+
+### 1）type()
+
+```python
+print(type(1)==int)
+# 如果是输出True，如果不是输出False
+
+
+# 使用type判断一个对象是否是函数
+import types
+def test():
+    pass
+print(type(test) == types.FunctionType)
+print( type(abs)==types.BuiltinFunctionType)
+print( type(lambda x: x)==types.LambdaType)
+print( type((x for x in range(10)))==types.GeneratorType)
+```
+
+
+
+### 2）isinstance
+
+```python
+isinstance(h, Husky)
+# 判断是否是某个对象，如果是为True，如果是为False
+
+isinstance('a', str)
+isinstance(123, int)
+isinstance(b'a', bytes)
+isinstance([1, 2, 3], (list, tuple))
+isinstance((1, 2, 3), (list, tuple))
+
+```
+
+
+
+### 3）dir()
+
+如果要获得一个对象的所有属性和方法，可以使用 dir()函数，它返回一个包含字符串的 list，比如，获得一个 str 对象的所有属性和方法：
+
+```python
+dir("ABC")
+```
+
+
+
+类似`__xxx__`的属性和方法在 Python 中都是有特殊用途的，比如`__len__`方法返回长度。在 Python 中，如果你调用 len()函数试图获取一个对象的长度，实际上，在 len()函数内部，它自动去调用该对象的`__len__()`方法，所以，下面的代码是等价的：
+
+```python
+ len('ABC')
+'ABC'.__len__()
+```
+
+
+
+#### 常用函数
+
+```python
+class MyObject(object):
+    def __init__(self):
+        self.x = 9
+        def power(self):
+            return self.x * self.x
+obj = MyObject()
+print(hasattr(obj, 'x'))  # 有属性'x'吗？
+print(obj.x) # 获取属性'x'
+print(hasattr(obj, 'y'))  # 有属性'y'吗？
+print(setattr(obj, 'y', 19))  # 设置一个属性'y'
+print(hasattr(obj, 'y') ) # 有属性'y'吗？
+print(getattr(obj, 'y'))  # 获取属性'y'
+print(obj.y ) # 获取属性'y'
+
+getattr(obj, 'z', 404) # 获取属性'z'，如果不存在，返回默认值 404
+ fn = getattr(obj, 'power') # 获取属性'power'并赋值到变量 fn
+```
+
+
+
+## 30.实例属性和类属性
+
+```python
+class Student(object):
+    name = "zhangsan"
+stu = Student()
+print(stu.name) # 输出结果：zhangsan
+print(Student.name) # 输出结果：zhangsan
+
+class Student(object):
+    def __init__(self,name):
+        self.name = name
+    name = "zhangsan"
+stu = Student("lisi")
+print(stu.name) # 输出结果：lisi
+
+class Student(object):
+    def __init__(self,name):
+        self.name = name
+    name = "zhangsan"
+stu = Student("lisi")
+del stu.name
+print(stu.name) # 输出张三
+```
+
+**从上面的例子可以看出，在编写程序的时候，千万不要把实例属性和类属性使用相同的名字，因为相同名称的实例属性将屏蔽掉类属性，但是当你删除实例属性后，再使用相同的名称，访问到的将是类属性**
+
+
+
+## 31.面向对象高级编程
+
+### 1）使用`__slots__`
+
+通过代码给类中的实例属性添加一个方法
+
+```python
+
+```
+
+
+
+## 32.多重继承
+
+
+
+## 33.定制类
+
+看到类似__slots__这种形如__xxx__的变量或者函数名就要注意，这些在Python 中是有特殊用途的
+
+### 1）`__str__`
+
+这个方法相当于java中toString方法
+
+```python
+class Student(object):
+    def __init__(self,name):
+        self.name = name
+    def __str__(self):
+        return "name实例的值为:%s"%self.name
+stu = Student("111")
+print(stu)
+```
+
+
+
+### 3）`__iter__` 循环对象
+
+```python
+class Fib(object):
+    def __init__(self):
+        self.a, self.b = 0, 1  # 初始化两个计数器 a，b
+    def __iter__(self):
+        return self  # 实例本身就是迭代对象，故返回自己
+    def __next__(self):
+        self.a, self.b = self.b, self.a + self.b  # 计算下一个值
+        if self.a > 100000:  # 退出循环的条件
+            raise StopIteration();
+        return self.a  # 返回下一个值
+for n in Fib():
+    print(n)
+```
+
+
+
+### 4）`__getitem__` 通过下标取出元素
+
+
+
+## 34.枚举
+
+```python
+from enum import Enum,unique
+@unique
+class Weekday(Enum):
+    Sun = 0  # Sun 的 value 被设定为 0
+    Mon = 1
+    Tue = 2
+    Wed = 3
+    Thu = 4
+    Fri = 5
+    Sat = 6
+print(Weekday.Mon.value)
+print(Weekday.Mon == Weekday.Thu)
+```
+
+## 35.使用元类
+
+
+
