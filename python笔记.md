@@ -987,3 +987,402 @@ print(Weekday.Mon == Weekday.Thu)
 
 
 
+## 36.错误、调试和测试
+
+### 1）错误处理
+
+这里说的错误处理就是捕获异常
+
+```python
+try:
+    ....
+except Exception as e:
+    ...
+finally:
+    
+# 例如
+def testException(num):
+    try:
+        result = 100/num
+    except Exception as e:
+        print("Error:",e)
+    print(result)
+testException(0)
+    
+```
+
+### 2）调用堆栈
+
+python解释器打印异常信息
+
+### 3）记录错误
+
+Python 内置的 logging 模块可以非常容易地记录错误信息
+
+```python
+import logging
+def testException(num):
+    try:
+        result = 100/num
+    except Exception as e:
+        logging.exception(e)
+    print(result)
+testException(0)
+```
+
+这个方法同样是打印错误，但是程序会继续执行，不会退出。
+
+
+
+### 3）抛出错误
+
+如果要抛出错误，首先定义一个错误类，选择好继承的错误，然后，用raise语句抛出一个错误
+
+```python
+class Error(ValueError):
+    print("出现错误")
+
+def foo(s):
+    n = int(s)
+    if n==0:
+        raise Error('invalid value: %s' % s)
+    return 10/n
+foo(0)
+```
+
+### 4）调试
+
+#### （1）断言
+
+凡是用 print()来辅助查看的地方，都可以用断言（assert）来替代
+
+```python
+
+def foo(s):
+    n = int(s)
+    assert n != 0,'n is zero'
+    return 10/n
+foo(0)
+```
+
+assert 的意思是，表达式 n != 0 应该是 True，否则，根据程序运行的逻辑，后面的代码肯定会出错。
+
+如果断言失败，assert 语句本身就会抛出 AssertionError
+
+启动 Python 解释器时可以用-O 参数来关闭 assert，关闭后，你可以把所有的 assert 语句当成 pass 来看。
+
+#### （2）logging
+
+这就是 logging 的好处，它允许你指定记录信息的级别，有 debug，info，warning，error 等几个级别，当我们指定 level=INFO 时，logging.debug就不起作用了
+
+```python
+import logging
+logging.basicConfig(level=logging.INFO) #指定记录信息级别
+def foo(s):
+    n = int(s)
+    logging.info('n = %d' % n)
+    return 10/n
+foo(0)
+```
+
+
+
+## 37.IO编程
+
+IO编程分为同步和异步，向外发送数据是OutputStream，接受数据是InputSteam
+
+
+
+## 38.文件读写
+
+### 1）读取文件
+
+```python
+# open表示打开一个文件，当成功打开一个文件，用read和readlines函数读取文件内容
+readFile = open("D:/pythonFile.txt","r",encoding="UTF-8") # r表示读 encoding编码 
+txt = readFile.read()
+print(txt)
+readFile.close()
+# 在操作文件的时候最后要关闭文件流
+```
+
+可以利用with函数，当读取完文件的时候程序自动调用close方法
+
+```python
+with open("D:/pythonFile.txt","r",encoding="UTF-8") as f:
+    print(f.read())
+```
+
+### 2）写文件
+
+```python
+f = open("D:/pythonFile.txt", "w") # 以写的方式打开一个文件,也可以用‘wb’的方式打开
+f.write("这是python写入文件的内容") # 这是写入文件的内容
+f.close() # 关闭文件流
+```
+
+也可以用with函数
+
+```python
+with open("D:/pythonFile.txt", "w") as  f:
+    f.write("这是用with函数写入的内容")
+```
+
+## 39.StringIO和BytesIO
+
+### 1）StringIO
+
+StringIO就是从内存中读取文件
+
+要把 str 写入 StringIO，我们需要先创建一个 StringIO，然后，像文件一样写入即可
+
+```python
+from io import StringIO
+f = StringIO() # 创建StringIO对象
+f.write("hello") # 向内存中写入内容
+f.write("  ")
+f.write("world")
+print(f.getvalue()) # 获取内存中的内容
+
+# StringIO初始化内容
+f = StringIO("StringIO初始化")
+print(f.getvalue()) # 获取内存中的内容
+```
+
+### 2）BytesIO
+
+BytesIO和StringIO操作是类似的
+
+```python
+from io import BytesIO
+b = BytesIO() # 创建BytesIO对象
+b.write("中文".encode("UTF-8")) # 写入经过 UTF-8 编码的 bytes
+print(b.getvalue())
+
+# 初始化BytesIO
+ f = BytesIO(b'\xe4\xb8\xad\xe6\x96\x87')
+ f.read() # 读取内容
+```
+
+
+
+## 40.操作文件和目录
+
+### 1）获取是什么操作系统
+
+```python
+import os
+print(os.name)
+# 如果是 posix，说明系统是 Linux、Unix 或 Mac OS X，如果是 nt，就是 Windows系统
+```
+
+### 2）环境变量
+
+```python
+os.environ
+# 查看系统变量
+os.environ.get('PATH')
+# 查看系统中的某一个变量
+```
+
+### 3）操作文件和目录
+
+#### （1）操作目录
+
+```python
+# 在某个目录下创建一个新目录，首先把新目录的完整路径表示出来
+# 把两个路径合成一个时，不要直接拼字符串，而要通过 os.path.join()函数，这样可以正确处理不同操作系统的路径分隔符
+path = os.path.join("D:/pythonFile","test1File")
+print(path)
+# 创建一个目录
+os.mkdir(path)
+# 删除一个目录
+os.rmdir(path)
+
+
+#要拆分路径时，也不要直接去拆字符串，而要通过os.path.split()函数，这样可以把一个路径拆分为两部分，后一部分总是最后级别的目录或文件名
+fileName = os.path.split("D:/pythonFile/test1File/file1.txt")
+print(fileName)
+# >>>('D:/pythonFile/test1File', 'file1.txt')
+# 获取文件的扩展名
+fileType = os.path.splitext("D:/pythonFile/test1File/file1.txt")
+print(fileType)
+# >>>('D:/pythonFile/test1File/file1', '.txt')
+```
+
+
+
+#### （2）操作文件
+
+```python
+# 假定当前目录下有一个 test.txt 文件
+# 对文件重命名:
+ os.rename('test.txt', 'test.py')
+# 删除文件
+os.remove('test.py')
+```
+
+#### （3）python过滤文件
+
+```python
+# 要列出当前目录下的所有目录
+[x for x in os.listdir('.') if os.path.isdir(x)]
+# 要列出所有的.py 文件
+[x for x in os.listdir('.') if os.path.isfile(x) and os.path.splitext(x)[1]=='.py']
+```
+
+
+
+## 41.序列化
+
+### 1）序列化与反序列化
+
+```python
+# 将一个对象序列化后写入一个文件
+import pickle
+d = dict(name="zhangsan",age = 18,address = "shandong")
+f = open("D:\\pythonFile\\test1File\\file1.txt","wb")
+pickle.dump(d,f)
+f.close()
+
+# 将文件中的内容读出来，进行反序列化
+r = open("D:\\pythonFile\\test1File\\file1.txt", "rb")
+result = pickle.load(r)
+r.close()
+print(result)
+```
+
+###  2）JSON
+
+#### （1）将数据转换成json
+
+```python
+text = dict(name="zhangsan", age=18, address="shandong")
+print(json.dumps(text))
+
+# 将一个class对象转换成json
+# 首先将一个class对象转换成dict，然后再转换成json
+class Student(object):
+    def __init__(self, name, age, score):
+        self.name = name
+        self.age = age
+        self.score = score
+s = Student("zhangsan",18,100)
+jsonText = json.dumps(s,default=lambda obj:obj.__dict__)
+print(jsonText)
+```
+
+
+
+#### （2）将json数据反序列化
+
+```python
+# 将json数据转换成class对象
+jsonText = {"name": "zhangsan", "age": 18, "score": 100}
+objText = json.loads(jsonText,object_hook=lambda d:Student(d["name"],d["age"],d["score"]))
+print(objText)
+```
+
+
+
+## 42.线程和进程（后续学习）
+
+
+
+## 43.正则表达式
+
+```python
+import re
+if re.match(r'正则表达式', test):
+	print('ok')
+else:
+	print('failed')
+# match()方法判断是否匹配，如果匹配成功，返回一个 Match 对象，否则返回 None
+```
+
+
+
+
+
+## 44.常见的内建模块
+
+### 1）datetime
+
+```python
+# 获取当前时间
+from datetime import datetime
+now = datetime.now()
+print(now)
+
+# 获取指定日期和时间
+dt = datetime(1997,5,5,15,55,55)
+print(dt)
+```
+
+
+
+### 2）将datetime转换成timestamp
+
+```python
+dt = datetime(1997,5,5,15,55,55)
+print(dt.timestamp())
+```
+
+### 3）将timestamp 转换成datetime
+
+```python
+t = 1429417200.0
+print(datetime.fromtimestamp(t))
+```
+
+### 4）str 转换成 datetime
+
+```python
+from datetime import datetime
+# cday = datetime.strptime('2015-6-1 18:19:59', '%Y-%m-%d %H:%M:%S')
+cday = datetime.strptime('2015-6-1 18:19:59', '%Y-%m-%d %H:%M:%S')
+print(cday)
+```
+
+### 5)datetime 转换成str
+
+```python
+from datetime import datetime
+nowTime = datetime.now()
+print(now.strftime("%a %b %d %H:%M"))
+```
+
+### 6)datetime的计算
+
+```python
+from datetime import datetime,timedelta
+now = datetime.now()
+print("现在的时间为：",now)
+resultNow = now+timedelta(hours=10)
+resultNow1 = now + timedelta(days=2, hours=12)
+print("现在的时间为：",resultNow)
+print("第二次计算的时间为：",resultNow1)
+```
+
+
+
+## 45.collections
+
+collections 是 Python 内建的一个集合模块，提供了许多有用的集合类。
+
+
+
+## 46.Base64
+
+Base64解码
+
+```python
+import base64
+base64.b64encode(b'binary\x00string')
+#>>>输出结果：b'YmluYXJ5AHN0cmluZw=='
+base64.b64decode(b'YmluYXJ5AHN0cmluZw==')
+#>>>输出结果：b'binary\x00string'
+```
+
+
+
