@@ -1384,5 +1384,259 @@ base64.b64decode(b'YmluYXJ5AHN0cmluZw==')
 #>>>输出结果：b'binary\x00string'
 ```
 
+## 47.struct
 
+1) struct 的 pack 函数把任意数据类型变成 bytes
+
+```python
+import struct
+struct.pack('>I', 10240099)
+# 输出结果:b'\x00\x9c@c'
+```
+
+pack 的第一个参数是处理指令，'>I'的意思是：表示字节顺序是 big-endian，也就是网络序，I 表示 4 字节无符号整数。
+后面的参数个数要和处理指令一致
+
+2) unpack 把 bytes 变成相应的数据类型
+
+```python
+struct.unpack('>IH', b'\xf0\xf0\xf0\xf0\x80\x80')
+# 输出结果：(4042322160, 32896)
+```
+
+根据>IH 的说明，后面的 bytes 依次变为 I：4 字节无符号整数和 H：2字节无符号整数
+
+## 48.hashlib
+
+### 1)MD5
+
+```python
+import hashlib
+md5 = hashlib.md5()
+md5.update('how to use md5 in python hashlib?'.encode('utf-8'))
+print(md5.hexdigest())
+md5.update("hello world".encode("utf-8"))
+print(md5.hexdigest())
+```
+
+
+
+MD5 是最常见的摘要算法，速度很快，生成结果是固定的 128 bit 字节,通常用一个 32 位的 16 进制字符串表示
+
+### 2)SHA1
+
+SHA1和MD5的用法比较类似
+
+```python
+import hashlib
+shal = hashlib.sha1()
+shal.update('how to use md5 in python hashlib?'.encode('utf-8'))
+print(shal.hexdigest())
+```
+
+SHA1 的结果是 160 bit 字节，通常用一个 40 位的 16 进制字符串表示。
+
+
+
+### 3)SHA256和SHA512
+
+是 SHA256 和 SHA512比SHA1更安全，不过越安全的算法不仅越慢，而且摘要长度更长
+
+
+
+## 49.itertools
+
+### 1）无限迭代器
+
+#### （1）count()函数
+
+```python
+import itertools
+result = itertools.count(1)
+for num in result:
+    print(num)
+```
+
+因为 count()会创建一个无限的迭代器，所以上述代码会打印出自然数序列，根本停不下来
+
+#### （2）cycle()函数
+
+```python
+import itertools
+cs = itertools.cycle("ABCD")
+for item in cs:
+    print(item)
+# 把传入的一个序列无限重复下去
+```
+
+#### （3）repeat()函数
+
+```python
+import itertools
+result = itertools.repeat("A",10)
+for obj in result:
+    print(obj)
+# 负责把一个元素无限重复下去，不过如果提供第二个参数就可以限定重复次数
+```
+
+### 2）操作函数
+
+####  （1）chain()函数
+
+```python
+import itertools
+for item in itertools.chain("ABC","XYZ"):
+    print(item)
+# 输出结果'A' 'B' 'C' 'X' 'Y' 'Z'
+# 可以把一组迭代对象串联起来，形成一个更大的迭代器
+```
+
+#### （2）groupby
+
+```python
+import itertools
+for key,group in itertools.groupby("AABBCCDDAA"):
+    print(key,list(group))
+# 把迭代器中相邻的重复元素挑出来放在一起
+```
+
+总结：itertools 模块提供的全部是处理迭代功能的函数，它们的返回值不是list，而是 Iterator，只有用 for 循环迭代的时候才真正计算
+
+## 50.XML
+
+### 1）读取xml
+
+```python
+from xml.parsers.expat import ParserCreate
+class DefaultSaxHandler(object):
+    def start_element(self, name, attrs):
+        print('sax:start_element: %s, attrs: %s' % (name, str(attrs)))
+    def end_element(self, name):
+        print('sax:end_element: %s' % name)
+    def char_data(self, text):
+        print('sax:char_data: %s' % text)
+xml = r'''<?xml version="1.0"?>
+<ol>
+ <li><a href="/python">Python</a></li>
+ <li><a href="/ruby">Ruby</a></li>
+</ol>
+'''
+handler = DefaultSaxHandler()
+parser = ParserCreate()
+parser.StartElementHandler = handler.start_element
+parser.EndElementHandler = handler.end_element
+parser.CharacterDataHandler = handler.char_data
+parser.Parse(xml)
+```
+
+
+
+### 2）生成xml
+
+```python
+# 有错误后期进行修改
+L = []
+L.append(r'<?xml version="1.0"?>')
+L.append(r'<root>')
+L.append(encode('some & data'))
+L.append(r'</root>')
+return ''.join(L)
+```
+
+
+
+## 51.HTMLParser
+
+解析html
+
+```python
+from html.parser import HTMLParser
+from html.entities import name2codepoint
+class MyHTMLParser(HTMLParser):
+    def handle_starttag(self, tag, attrs):
+        print('<%s>' % tag)
+    def handle_endtag(self, tag):
+        print('</%s>' % tag)
+    def handle_startendtag(self, tag, attrs):
+        print('<%s/>' % tag)
+    def handle_data(self, data):
+        print(data)
+    def handle_comment(self, data):
+        print('<!--', data, '-->')
+    def handle_entityref(self, name):
+        print('&%s;' % name)
+    def handle_charref(self, name):
+        print('&#%s;' % name)
+parser = MyHTMLParser()
+parser.feed('''<html>
+<head></head>
+<body>
+<!-- test html parser -->
+ <p>Some <a href=\"#\">html</a> HTML&nbsp;tutorial...<br>END</p>
+</body></html>''')
+```
+
+
+
+## 52.urllib
+
+urllib 提供了一系列用于操作 URL 的功能。
+
+### 1）GET
+
+对一个URL进行抓取，并返回响应
+
+```python
+from urllib import request
+with request.urlopen('https://www.baidu.com') as f:
+    data = f.read()
+    print("Status:",f.status,f.reason)
+    for k, v in f.getheaders():
+        print('%s: %s' % (k, v))
+    print('Data:', data.decode('utf-8'))
+
+```
+
+如果我们要想模拟浏览器发送 GET 请求，就需要使用 Request 对象，通过往 Request 对象添加 HTTP 头，我们就可以把请求伪装成浏览器。例如，模拟 iPhone 6 去请求百度
+
+```python
+from urllib import request
+req = request.Request("https://www.baidu.com")
+req.add_header('User-Agent', 'Mozilla/6.0 (iPhone; CPU iPhone OS 8_0like Mac OS X) AppleWebKit/536.26 (KHTML, like Gecko) Version/8.0Mobile/10A5376e Safari/8536.25')
+with request.urlopen('https://www.baidu.com') as f:
+    data = f.read()
+    print("Status:",f.status,f.reason)
+    for k, v in f.getheaders():
+        print('%s: %s' % (k, v))
+    print('Data:', data.decode('utf-8'))
+```
+
+### 3）POST
+
+模拟微博登入
+
+```python
+print('Login to weibo.cn...')
+email = input('15634122070')
+passwd = input('19970505dzd')
+login_data = parse.urlencode([
+    ('username', email),
+    ('password', passwd),
+    ('entry', 'mweibo'),
+    ('client_id', ''),
+    ('savestate', '1'),
+    ('ec', ''),
+    ('pagerefer',
+     'https://passport.weibo.cn/signin/welcome?entry=mweibo&r=http%3A%2F%2Fm.weibo.cn % 2F')])
+
+req = request.Request('https://passport.weibo.cn/sso/login')
+req.add_header('Origin', 'https://passport.weibo.cn')
+req.add_header('User-Agent', 'Mozilla/6.0 (iPhone; CPU iPhone OS 8_0likeMacOSX) AppleWebKit / 536.26(KHTML, likeGecko) Version / 8.0Mobile / 10A5376eSafari / 8536.25')
+req.add_header('Referer','https://passport.weibo.cn/signin/login?entry=mweibo&res=wel&wm=3349&r = http%3A%2F%2Fm.weibo.cn%2F')
+with request.urlopen(req, data=login_data.encode('utf-8')) as f:
+    print('Status:', f.status, f.reason)
+for k, v in f.getheaders():
+    print('%s: %s' % (k, v))
+print('Data:', f.read().decode('utf-8'))
+```
 

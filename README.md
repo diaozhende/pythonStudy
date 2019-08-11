@@ -17,3 +17,8 @@
 ### 学习python第五天
 
 学习了错误，调试和测试，IO编程，文件读写，StringIO和BytestIO，操作文件和目录，序列化，正则表达式，常见内建模块，collections，base64(Python3-廖雪峰带标签完整版--317)。
+
+### 学习python第六天
+
+学习了struct，hashlib，itertools，xml，HTMLParser，urllib（Python3-廖雪峰带标签完整版--339）
+
