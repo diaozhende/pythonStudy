@@ -3,6 +3,7 @@
 list是一个可变的有序表，类似于java的list,list中的数据类型可以不相同,list元素可以是可以是另一个list
 方法:
 1)向一个集合末尾添加数据
+
 ```python 
 list.append("数据内容")
 ```
@@ -1638,5 +1639,135 @@ with request.urlopen(req, data=login_data.encode('utf-8')) as f:
 for k, v in f.getheaders():
     print('%s: %s' % (k, v))
 print('Data:', f.read().decode('utf-8'))
+```
+
+
+
+## 53.python操作mysql数据库
+
+### 1.安装mysql驱动模块
+
+```python
+ pip install mysql-connector-python
+```
+
+### 2.操作数据库代码
+
+```python
+# 导入mysql驱动
+import mysql.connector
+# 连接数据库
+conn = mysql.connector.connect(user='root', password='root',database='pythontestdb')
+cursor = conn.cursor()
+# 执行sql语句
+cursor.execute("insert into user(id,username,password) values(%s,%s,%s)",["2","lisi","123321"])
+cursor.execute("select * from user where id = %s",["1"])
+result = cursor.fetchall()
+print(result)
+# 提交事务
+conn.commit()
+cursor.close()
+
+# 输出结果：[('1', 'zhangsan', '123321')]
+```
+
+
+
+## 54.SQLAlchemy
+
+SQLAlchemy是一种ORM技术，将数据封装到一个对象中对数据库进行插入数据和接收数据
+
+### （1）添加数据
+
+```python
+from sqlalchemy import Column, String, create_engine
+from sqlalchemy.orm import sessionmaker
+from sqlalchemy.ext.declarative import declarative_base
+
+Base = declarative_base()
+class User(Base):
+    __tablename__ = "user"
+    id = Column(String(100),primary_key=True)
+    username = Column(String(255))
+    password = Column(String(255))
+
+engine = create_engine("mysql+mysqlconnector://root:root@localhost:3306/pythontestdb")
+DBSession = sessionmaker(bind = engine)
+sessio = DBSession()
+# 增加数据
+user1 = User(id='3',username = 'zhangyujie',password = '123321')
+sessio.add(user1)
+sessio.commit()
+sessio.close()
+```
+
+
+
+### （2）查询数据
+
+```python
+from sqlalchemy import Column, String, create_engine
+from sqlalchemy.orm import sessionmaker
+from sqlalchemy.ext.declarative import declarative_base
+
+Base = declarative_base()
+class User(Base):
+    __tablename__ = "user"
+    id = Column(String(100),primary_key=True)
+    username = Column(String(255))
+    password = Column(String(255))
+
+engine = create_engine("mysql+mysqlconnector://root:root@localhost:3306/pythontestdb")
+DBSession = sessionmaker(bind = engine)
+sessio = DBSession()
+# 查询数据
+user = sessio.query(User).filter(User.username == 'zhangyujie').one()
+print(user.username)
+sessio.close()
+```
+
+
+
+## 55.WSGI
+
+通过python内置的服务器向浏览器返回一个html
+
+###  (1)具体动作python文件
+
+```python
+# WSGIDemo.py
+def webFirstFuntion(environ, start_response):
+    start_response('200 OK', [('Content-Type', 'text/html')])
+    return [b'<h1>Hello, web!</h1>']
+```
+
+
+
+### (2)Server服务器端
+
+```python
+# server.py
+# 从 wsgiref 模块导入:
+from wsgiref.simple_server import make_server
+# 导入我们自己编写的 webFirstFuntion 函数:
+from WSGIDemo import webFirstFuntion
+# 创建一个服务器，IP 地址为空，端口是 8000，处理函数是 application:
+httpd = make_server('', 8000, webFirstFuntion)
+print('Serving HTTP on port 8000...')
+# 开始监听 HTTP 请求:
+httpd.serve_forever()
+```
+
+### (3)传递参数
+
+```python
+# WSGIDemo.py
+def application(environ, start_response):
+ start_response('200 OK', [('Content-Type', 'text/html')])
+ body = '<h1>Hello, %s!</h1>' % (environ['PATH_INFO'][1:] or 'web')
+ return [body.encode('utf-8')]
+
+# 访问地址：http://localhost:8000/username
+# 页面显示：Hello username
 ```
 

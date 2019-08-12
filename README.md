@@ -22,3 +22,8 @@
 
 学习了struct，hashlib，itertools，xml，HTMLParser，urllib（Python3-廖雪峰带标签完整版--339）
 
+### 学习python第七天
+
+(1)解决pip指令安装python模块报错的问题。
+
+(2)学习了python操作mysql数据库，SQLAlchemy，WSGI模块。（Python3-廖雪峰带标签完整版--421）
