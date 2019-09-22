@@ -5,6 +5,7 @@
       <option name="ignoredIdentifiers">
         <list>
           <option value="pythonDemo.WSGIServer.WSGIDemo" />
+          <option value="sklearn.linear_model.RandomizedLogisticRegression" />
         </list>
       </option>
     </inspection_tool>

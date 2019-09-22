@@ -1127,7 +1127,24 @@ f.close() # 关闭文件流
 ```python
 with open("D:/pythonFile.txt", "w") as  f:
     f.write("这是用with函数写入的内容")
+with open("D:/pythonFile.txt", "w",encoding="utf-8") as  f: # encoding设置编码
+    f.write("这是用with函数写入的内容")   
 ```
+
+### 3）open方法参数
+
+```
+'r'：读
+'w'：写
+'a'：追加
+'r+' == r+w（可读可写，文件若不存在就报错(IOError)）
+'w+' == w+r（可读可写，文件若不存在就创建）
+'a+' ==a+r（可追加可写，文件若不存在就创建）
+对应的，如果是二进制文件，就都加一个b就好啦：
+'rb'　　'wb'　　'ab'　　'rb+'　　'wb+'　　'ab+'
+```
+
+
 
 ## 39.StringIO和BytesIO
 
@@ -1771,3 +1788,151 @@ def application(environ, start_response):
 # 页面显示：Hello username
 ```
 
+
+
+## 56.使用web框架
+
+python中的web框架有很多，这里使用的是Flask。
+
+```python
+from flask import Flask
+from flask import request
+app = Flask(__name__)
+# 请求方式和地址
+@app.route('/signin',methods=['GET'])
+def singin_form():
+    return '''
+        <form action="/signin" method="post">
+         <p><input name="username"></p>
+         <p><input name="password" type="password"></p>
+         <p><button type="submit">Sign In</button></p>
+         </form>
+    '''
+
+@app.route('/',methods=['GET','POST'])
+def toHome():
+    return "<h1>Home</h1>"
+
+
+@app.route("/signin",methods=["POST"])
+def signin():
+    # 获取form表单提交过来的数据
+    username = request.form['username']
+    password = request.form['password']
+    if username == "admin" and password == "password":
+        return "<h1>Hello admin</h1>"
+    return "<h1>用户名或密码错误</h1>"
+
+
+if __name__ == '__main__':
+# 运行 python app.py，Flask 自带的 Server 在端口 5000 上监听
+    app.run()
+```
+
+
+
+`除了Flask框架之外还有比如：`
+
+（1）Django：全能型 Web 框架；
+（2）web.py：一个小巧的 Web 框架；
+（3）Bottle：和 Flask 类似的 Web 框架；
+（4）Tornado：Facebook 的开源异步 Web 框架。
+
+## 57.使用模板
+
+python有很多，这里我们使用jinja2，开发模式为MVC模式
+
+### 1）安装命令：
+
+```python
+$ pip install jinja2
+```
+
+### 2）前端代码
+
+```html
+<!--home.html-->
+<html>
+<head>
+ <title>Home</title>
+</head>
+<body>
+ <h1 style="font-style:italic">Home</h1>
+</body>
+</html>
+
+<!--form.html-->
+<html>
+<head>
+ <title>Please Sign In</title>
+</head>
+<body>
+    <!--判断指令-->
+ {% if message %}
+    <!--通过{{}}指令接收后台传递过来的参数-->
+ <p style="color:red">{{ message }}</p>
+ {% endif %}
+ <form action="/signin" method="post">
+ <legend>Please sign in:</legend>
+ <p><input name="username" placeholder="Username"
+value="{{ username }}"></p>
+ <p><input name="password" placeholder="Password"
+type="password"></p>
+ <p><button type="submit">Sign In</button></p>
+ </form>
+</body>
+</html>
+
+<!--signin-ok.html-->
+<html>
+<head>
+    <title>Welcome, {{ username }}</title>
+</head>
+<body>
+ <p>Welcome, {{ username }}!</p>
+</body>
+</html>
+```
+
+### 3）后端代码
+
+```python
+from flask import Flask,request,render_template
+app = Flask("__name__")
+
+@app.route("/",methods=["POST","GET"])
+def toHome():
+    return render_template("home.html")
+
+@app.route("/login",methods=["GET"])
+def toForm():
+    # 通过render_template方法往前台进行传递参数
+    return render_template("form.html")
+
+@app.route("/submit",methods=["POST"])
+def submit():
+    username = request.form['username']
+    password = request.form['password']
+    if username == 'admin' and password == "admin":
+        # 通过render_template方法往前台进行传递参数
+        return render_template("signin-ok.html",username = username)
+    return render_template("form.html",message="Bad username or password",username = username)
+
+if __name__ == "__main__":
+    app.run()
+```
+
+### 4）其他指令
+
+（1）循环指令
+
+```python
+{% for i in page_list %}
+	<a href="/page/{{ i }}">{{ i }}</a>
+{% endfor %}
+```
+
+除了 Jinja2，常见的模板还有：
+Mako：用<% ... %>和${xxx}的一个模板；
+Cheetah：也是用<% ... %>和${xxx}的一个模板；
+Django：Django 是一站式框架，内置一个用{% ... %}和{{ xxx }}的模板。
