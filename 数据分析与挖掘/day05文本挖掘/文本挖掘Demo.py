@@ -1,5 +1,6 @@
 import jieba
 txt1 = "我喜欢上海东方明珠"
+# m默认是精准模式
 # 全模式
 w1 = jieba.cut(txt1,True)
 for text in w1:

@@ -1936,3 +1936,51 @@ if __name__ == "__main__":
 Mako：用<% ... %>和${xxx}的一个模板；
 Cheetah：也是用<% ... %>和${xxx}的一个模板；
 Django：Django 是一站式框架，内置一个用{% ... %}和{{ xxx }}的模板。
+
+
+
+## 58.numpy
+
+### (1)布尔值数组计算的方法
+
+```python
+# any方法：any用于测试数组中是否存在一个或多个True
+numpy.any()
+# any方法：any用于测试数组中是否都是True
+numpy.all()
+```
+
+### (2)排序
+
+```python
+# 数组从小到大排序
+arr.sort()
+# 多维数组可以在任何一个轴向上进行排序，只需将编号传给sort
+arr.sort(1)
+```
+
+### (3)将5数组进行去重和排序
+
+```python
+numpy.unique(arr)
+```
+
+### (4)判断一个数组中的值在另一个数组中时候存在
+
+```python
+values = numpy.array([6,0,0,3,2,5,6])
+numpy.in1d(values,[2,3,6])
+#结果：([True,False,False,True,True,False,True])
+```
+
+![1569373961898](C:\Users\diaozhende\AppData\Roaming\Typora\typora-user-images\1569373961898.png)
+
+### (5)存取文本内容
+
+```python
+arr = numpy.loadtxt("array_ex.txt",delimiter=",")
+# 输出结果:array([[0.5801,0.1867...]])
+```
+
+## 59.pandas
+

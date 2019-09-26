@@ -21,20 +21,24 @@ def knn(k, testData, trainData, labels):
 # 读取图片
 from PIL import Image
 
-img = Image.open("C:/Users/diaozhende/Desktop/three.jpg")
-imgFile = open("C:/Users/diaozhende/Desktop/three.txt", "a")
-width = img.size[0]
-height = img.size[1]
+im = Image.open("C:/Users/diaozhende/Desktop/three.png")
+fh = open("C:/Users/diaozhende/Desktop/three.txt", "a")
+# im.save("C:/Users/me/Pictures/weixin.bmp")
+width = im.size[0]
+height = im.size[1]
+# k=im.getpixel((1,9))
+# print(k)
 for i in range(0, width):
     for j in range(0, height):
-        color = img.getpixel((i, j))
-        clall = color[0] + color[1] + color[2]
+        cl = im.getpixel((i, j))
+        clall = cl[0] + cl[1] + cl[2]
         if (clall == 0):
-            imgFile.write("1")
+            # 黑色
+            fh.write("1")
         else:
-            imgFile.write("0")
-    imgFile.write("\n")
-imgFile.close()
+            fh.write("0")
+    fh.write("\n")
+fh.close()
 
 
 # 加载数据
