@@ -1984,3 +1984,14 @@ arr = numpy.loadtxt("array_ex.txt",delimiter=",")
 
 ## 59.pandas
 
+
+
+## 60.matplotlib
+
+### (1)解决画图中文显示问题
+
+```python
+#解决matplotlib显示中文的问题
+pylab.rcParams['font.sans-serif'] = ['SimHei']
+```
+
