@@ -328,3 +328,16 @@ col.groupby(by="color")["price1"].max()
 col["price1"].groupby(col["color"]).max()
 ```
 
+### 12、统计某一列中各个值出现的次数
+
+```python
+games_data.loc[:,'Age Rating'].value_counts()
+```
+
+### 13、取出不等于某个数的数据
+
+```python
+#通过~取反，选取不包含数字1的行
+df1=df1[~df1['A'].isin([1])]
+```
+
