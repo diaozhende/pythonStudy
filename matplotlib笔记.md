@@ -193,6 +193,119 @@ matplotlib.pylab.axis("equal")
 matplotlib.pylab.show()
 ```
 
+### 8、seaborn绘制柱状图
+
+```python
+# seaborn.barplot()参数说明
+# x和y是数据
+# orient：设置柱状图水平绘制还是竖直绘制，"h"表示水平，“v”表示竖直。
+# palette：设置颜色
+x = numpy.arange(8)
+y = numpy.array([1,23,4,5,6,7,8,9])
+matplotlib.pylab.figure(figsize=(20,8),dpi=80)
+flatui = ["#9b59b6", "#3498db", "#95a5a6", "#e74c3c", "#34495e", "#2ecc71","#E1812C"]
+pf = pandas.DataFrame({"x-axis":x,"y-axis":y})
+seaborn.barplot(x=x,y=y,palette = seaborn.color_palette(flatui),orient="h")
+matplotlib.pylab.xlabel("x轴")
+matplotlib.pylab.ylabel("y轴")
+matplotlib.pylab.title("用seaborn绘制柱状图")
+matplotlib.pylab.show()
+```
+
+### 9、seaborn绘制散点图
+
+```python
+# seaborn.scatterplot()参数：
+# x和y参数是数据
+# size：用数据中某一列来通过大小区分类别
+# hue：用数据中某一列来通过颜色区分类别
+# style：用数据中某一列来通过形状区分类别
+# palette:设置颜色
+# hue_order：在使用hue参数对数据进行分组时，可以通过该参数设置数据组的显示顺序
+ar=numpy.random.randn(20,4)
+df=pandas.DataFrame(ar,columns=['a','b','c','d'])
+df['e']=pandas.Series(['one','one','one','one','one','one','two','two','two','two','two','two','two','two','three','three','three','three','three','three'])
+matplotlib.pylab.figure(figsize=(20,8),dpi=80)
+seaborn.scatterplot(x=df['a'],y=df['b'],size=df["e"])
+matplotlib.pylab.show()
+
+seaborn.scatterplot(df['a'],df['b'],hue=df['e'],palette=seaborn.color_palette(flatui),hue_order=['three','one','two'])
+
+seaborn.scatterplot(df['a'],df['b'],hue=df['e'],style=df["e"])
+```
+
+### 10、seaborn绘制折线图
+
+```python
+# seaborn.lineplot()参数
+# x和y是数据
+# hue：根据线条的颜色进行分组
+# palette：设置线条的颜色
+load_data = load_diabetes()
+data = pandas.DataFrame(load_data.data,columns=load_data.feature_names)
+df = data[:80]
+def  fun(x):
+    if x>0:
+        return 1
+    else:
+        return 0
+matplotlib.pylab.figure(figsize=(20,8),dpi=80)
+color=["#34495e", "#2ecc71"]
+seaborn.lineplot(x=df["age"],y=df["s4"],hue=df["sex"],palette=seaborn.color_palette(color))
+matplotlib.pylab.show()
+```
+
+
+
+
+
+### 常见图
+
+```python
+import seaborn as sns
+# 折线图
+sns.lineplot()
+# 条形图
+sns.barplot()
+# 计数条形图
+sns.countplot()
+# 散点图
+sns.scatterplot()
+# 分类散点图
+sns.stripplot()
+# 分簇散点图
+sns.swarmplot() # 与stipplot()的区别就是点不重叠
+# 箱型图
+sns.boxplot()
+# 增强箱型图
+sns.boxenplot() # 适合大数据集，显示更多分位数
+# 小提琴图
+sns.violinplot()
+# 点图
+sns.pointplot() # 纵轴是均值，置信区间用标准差表示
+# 核密度估计图
+sns.kdeplot(x,bw=2.0, shade=True) #bw为带宽
+# 地毯图
+sns.rugplot(x) # 直接将数据标记在坐标轴上
+# 回归线图
+sns.regplot() # 散点图附加回归线
+# 热图
+sns.heatmap(annot=True) # annot表示显示数值
+# 另外补充几种常用图
+# 饼图
+plt.pie(x, label, explode,shadow=True,pctdistance=0.6,labeldistance=1.1，startangle=90) # explode表示部分扇形突出，x,label,explode均为数组形式数据
+# 极坐标图
+ax = plt.subplot(111,projection='polar') # projection指投影到极坐标
+ax.plot(x,y) # x为角度(弧度制),y为径长
+# 平行坐标图
+from pandas.plotting import parallel_coordinates
+parallel_coordinates(data, 'key')
+```
+
+
+
+
+
 ### 问题
 
 #### （1）解决matplotlib中的中文显示乱码问题
@@ -205,3 +318,16 @@ matplotlib.pyplot.rcParams['font.sans-serif']=['SimHei'] #用来正常显示中�
 ### matplotlib画图颜色条
 
 ![matplotlib颜色图](C:\Users\diaozhende\Pictures\Saved Pictures\pythonStudy\matplotlib颜色图.png)
+
+### 常用配色
+
+![](C:\Users\diaozhende\Pictures\Saved Pictures\md图片\配色图1.png)
+
+![](C:\Users\diaozhende\Pictures\Saved Pictures\md图片\配色图2.png)
+
+![](C:\Users\diaozhende\Pictures\Saved Pictures\md图片\配色图3.jpg)
+
+![](C:\Users\diaozhende\Pictures\Saved Pictures\md图片\配色图4.jpg)
+
+![](C:\Users\diaozhende\Pictures\Saved Pictures\md图片\配色图5.jpg)
+
