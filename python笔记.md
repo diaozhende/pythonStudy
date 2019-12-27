@@ -1937,6 +1937,23 @@ Mako：用<% ... %>和${xxx}的一个模板；
 Cheetah：也是用<% ... %>和${xxx}的一个模板；
 Django：Django 是一站式框架，内置一个用{% ... %}和{{ xxx }}的模板。
 
+## 58.python使用md5进行加密
+
+```python
+import hashlib
+pwd = hashlib.md5()
+a = '1111111111'
+pwd.update(a.encode('utf-8'))
+pwd.hexdigest() # 将结果转换成字符串
+```
+
+## 59.uuid的使用
+
+```python
+import uuid
+id = uuid.uuid1() # uuid2()、uuid3()、uuid4()、uuid5()
+str(id)
+```
 
 
 

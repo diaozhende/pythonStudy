@@ -315,11 +315,11 @@ import matplotlib.pyplot
 matplotlib.pyplot.rcParams['font.sans-serif']=['SimHei'] #用来正常显示中文标签
 ```
 
-### matplotlib画图颜色条
+### （2）matplotlib画图颜色条
 
 ![matplotlib颜色图](C:\Users\diaozhende\Pictures\Saved Pictures\pythonStudy\matplotlib颜色图.png)
 
-### 常用配色
+### （3）常用配色
 
 ![](C:\Users\diaozhende\Pictures\Saved Pictures\md图片\配色图1.png)
 
@@ -330,4 +330,10 @@ matplotlib.pyplot.rcParams['font.sans-serif']=['SimHei'] #用来正常显示中�
 ![](C:\Users\diaozhende\Pictures\Saved Pictures\md图片\配色图4.jpg)
 
 ![](C:\Users\diaozhende\Pictures\Saved Pictures\md图片\配色图5.jpg)
+
+### （4）将图保存到本地
+
+```python
+matplotlib.pylab.savefig("路径")
+```
 

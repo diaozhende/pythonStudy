@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>图书详情</title>
+</head>
+<body>
+    <h1>图书详情</h1>
+    {% for i in bookRole %}
+         <h1>{{ i.roleName }}</h1>
+        {% empty %}
+         <h1>没有内容</h1>
+    {% endfor %}
+</body>
+</html>

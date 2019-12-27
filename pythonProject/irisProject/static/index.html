@@ -1,0 +1,296 @@
+<!doctype html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/demo_styles.css">
+    <link rel="stylesheet" href="css/demo1.css">
+    <link rel="stylesheet" type="text/css" href="css/default1.css">
+    <script src="js/vendor/modernizr-2.6.2.min.js"></script>
+    <script src="js/jquery-3.4.1.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="css/bootstrap.css"/>
+    <link rel="stylesheet" href="css/xcConfirm.css"/>
+    <script src="js/xcConfirm.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/normalize.css"/>
+    <link rel="stylesheet" type="text/css" href="css/default.css">
+    <link href="css/Icomoon/style.css" rel="stylesheet" type="text/css"/>
+    <script type="text/javascript" src="js/main.js"></script>
+    <style>
+        p {
+            margin-bottom: 0px;
+        }
+
+        .overlay .wrap {
+            margin: 0px auto 0;
+        }
+
+        @media (min-width: 768px) {
+            .form-inline .form-group {
+                display: inline-block;
+                margin-bottom: 2%;
+                vertical-align: middle;
+            }
+        }
+
+        label {
+            margin-right: 5px;
+        }
+
+        .btn-success {
+            width: 12%;
+            /*margin: 0 2% 0 6%;*/
+            margin: 0% 46%;
+        }
+
+        /* .btn-danger {
+             width: 12%;
+         }*/
+        #loading {
+            background-color: #1abc9c;
+            height: 100%;
+            width: 100%;
+            position: fixed;
+            z-index: 1;
+            margin-top: 0px;
+            top: 0px;
+        }
+
+        #loading-center {
+            width: 100%;
+            height: 100%;
+            position: relative;
+        }
+
+        #loading-center-absolute {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            height: 200px;
+            width: 200px;
+            margin-top: -100px;
+            margin-left: -100px;
+        }
+
+        #object {
+            width: 80px;
+            height: 80px;
+            background-color: #FFF;
+            -webkit-animation: animate 1s infinite ease-in-out;
+            animation: animate 1s infinite ease-in-out;
+            margin-right: auto;
+            margin-left: auto;
+            margin-top: 60px;
+        }
+
+        @-webkit-keyframes animate {
+            0% {
+                -webkit-transform: perspective(160px);
+            }
+            50% {
+                -webkit-transform: perspective(160px) rotateY(-180deg);
+            }
+            100% {
+                -webkit-transform: perspective(160px) rotateY(-180deg) rotateX(-180deg);
+            }
+        }
+
+        @keyframes animate {
+            0% {
+                transform: perspective(160px) rotateX(0deg) rotateY(0deg);
+                -webkit-transform: perspective(160px) rotateX(0deg) rotateY(0deg);
+            }
+            50% {
+                transform: perspective(160px) rotateX(-180deg) rotateY(0deg);
+                -webkit-transform: perspective(160px) rotateX(-180deg) rotateY(0deg);
+            }
+            100% {
+                transform: perspective(160px) rotateX(-180deg) rotateY(-180deg);
+                -webkit-transform: perspective(160px) rotateX(-180deg) rotateY(-180deg);
+            }
+        }
+
+        .nav {
+            margin: 100px auto 90px;
+        }
+
+        button, input, select, textarea {
+            font-size: 60%;
+        }
+
+        .txt {
+            position: absolute;
+            top: 50%;
+            left: 40%;
+            line-height: 0;
+            margin-left: -0.5em;
+        }
+
+        .mfg-cancel:before {
+            color: #FFF;
+        }
+    </style>
+</head>
+<body id class="dm-demo1">
+<!--<div id="view">
+    <div class="htmleaf-demo center">
+        <a href="index.html" class="current">DEMO1</a>
+        <a href="index2.html">DEMO2</a>
+        <a href="index3.html">DEMO3</a>
+        <a href="index4.html">DEMO4</a>
+    </div>-->
+<!-- Demo Navigation -->
+<nav class="nav clearfix">
+    <button class="nav-el" id="el-topleft" data-id="ov-topleft"><span class="txt">菜单一</span></button>
+    <button class="nav-el" id="el-topright" data-id="ov-topright"><span class="txt">菜单二</span></button>
+    <button class="nav-el" id="el-btmleft" data-id="ov-btmleft"><span class="txt">菜单三</span></button>
+    <button class="nav-el" id="el-btmright" data-id="ov-btmright"><span class="txt">菜单四</span></button>
+</nav>
+<!-- Overlay (hidden by default)-->
+<section class="overlay" id="ov-topleft">
+    <div class="wrap">
+        <h1>Section 1</h1>
+        <form class="form-inline">
+            <div class="form-group">
+                <label for="exampleInputEmail1">萼长</label>
+                <input type="text" class="form-control" id="calyxLong" placeholder="表单">
+            </div>
+            <br>
+            <div class="form-group">
+                <label for="exampleInputEmail1">萼宽</label>
+                <input type="text" class="form-control" id="calyxWide" placeholder="表单">
+            </div>
+            <br>
+            <div class="form-group">
+                <label for="exampleInputEmail1">瓣长</label>
+                <input type="text" class="form-control" id="petalLong" placeholder="表单">
+            </div>
+            <br>
+            <div class="form-group">
+                <label for="exampleInputEmail1">瓣宽</label>
+                <input type="text" class="form-control" id="petalWide" placeholder="表单">
+            </div>
+            <br>
+            <button id="commit" type="button" class="btn btn-success" onclick="submitFunction()">提交</button>
+            <!--<button id="commit" type="button" class="btn btn-danger" onclick="back()">返回</button>-->
+        </form>
+    </div>
+    <button class="close"><span class="mfg-cancel"></span></button>
+</section>
+
+<section class="overlay" id="ov-topright">
+    <div class="wrap">
+        <h1>Section 2</h1>
+
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
+            dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
+            ex
+            ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
+            fugiat
+            nulla pariatur. <br><br> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
+            incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
+            laboris nisi ut aliquip ex ea commodo consequat.</p>
+    </div>
+
+    <button class="close"><span class="mfg-cancel"></span></button>
+</section>
+
+<section class="overlay" id="ov-btmleft">
+    <div class="wrap">
+        <h1>Section 3</h1>
+
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
+            dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
+            ex
+            ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
+            fugiat
+            nulla pariatur. <br><br> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
+            incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
+            laboris nisi ut aliquip ex ea commodo consequat.</p>
+    </div>
+
+    <button class="close"><span class="mfg-cancel"></span></button>
+</section>
+
+<section class="overlay" id="ov-btmright">
+    <div class="wrap">
+        <h1>Section 4</h1>
+
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
+            dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
+            ex
+            ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
+            fugiat
+            nulla pariatur. <br><br> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
+            incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
+            laboris nisi ut aliquip ex ea commodo consequat.</p>
+    </div>
+
+    <button class="close"><span class="mfg-cancel"></span></button>
+</section>
+
+<div class="browser_msg">
+    <p>对不起，你的浏览器不支持CSS3特性！</a></p>
+</div>
+
+</div>
+
+</div>
+<!--<div id="loading" style="display: none;">
+    <div id="loading-center">
+        <div id="loading-center-absolute">
+            <div id="object"></div>
+        </div>
+    </div>
+</div>-->
+<!--<script src="http://www.jq22.com/jquery/1.11.1/jquery.min.js"></script>-->
+<script>window.jQuery || document.write('<script src="js/vendor/jquery-1.10.2.min.js"><\/script>')</script>
+<script src="js/plugins.js"></script>
+<script src="js/demo.js"></script>
+<script>
+    /*$(function () {
+        $("#commit").click(function () {
+            var txt = "预测成功";
+            window.wxc.xcConfirm(txt, window.wxc.xcConfirm.typeEnum.success);
+        });
+    })*/
+    function back() {
+        location.reload();
+    }
+
+    function sleep(n) {
+        var start = new Date().getTime();
+        while (true) {
+            if (new Date().getTime() - start > n) {
+                break;
+            }
+        }
+    }
+
+    function submitFunction() {
+        var calyxLong = $("#calyxLong").val();
+        var calyxWide = $("#calyxWide").val();
+        var petalLong = $("#petalLong").val();
+        var petalWide = $("#petalWide").val();
+        $.ajax({
+            url: '../iris/knn/',
+            type: 'GET',
+            data: {"calyxLong": calyxLong, "calyxWide": calyxWide, "petalLong": petalLong, "petalWide": petalWide},
+            success: function (res) {
+                console.log(res);
+                if (res.code == 200) {
+                    var txt = "预测结果为：" + res.data;
+                    window.wxc.xcConfirm(txt, window.wxc.xcConfirm.typeEnum.success);
+                } else {
+                    window.wxc.xcConfirm(res.msg, window.wxc.xcConfirm.typeEnum.error);
+                }
+            }
+        })
+
+    }
+</script>
+</body>
+</html>
